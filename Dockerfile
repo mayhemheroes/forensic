@@ -1,4 +1,4 @@
-FROM golang:1.18 as builder
+FROM golang:1.21 AS builder
 
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y build-essential
@@ -6,8 +6,7 @@ RUN apt-get update && \
 ADD . /forensic
 WORKDIR /forensic
 
-RUN go mod tidy
-RUN go build
+RUN go build -mod=vendor
 
 # Package Stage
 FROM debian:bookworm-slim
